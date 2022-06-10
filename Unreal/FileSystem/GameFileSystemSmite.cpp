@@ -47,7 +47,10 @@ FMemReader* GetSmiteBlob(const char* name, int name_len, int level, const char* 
     for(i = 0; i < item->Num(); i++) {
         FSmiteFile* entry = item->GetData() + i;
         if(entry->tier == level) {
-            FString* bulk = GSmiteManifest->BulkFiles.Find(entry->guid);
+            FString* bulk = GSmiteManifest->BulkFiles.Find(*reinterpret_cast<FGuid*>(ctx.digest));
+            if(bulk == nullptr) {
+                return nullptr;
+            }
             char filename[512];
 	        appSprintf(ARRAY_ARG(filename), "%s.%s", bulk->GetDataArray().GetData(), ext);
             const CGameFileInfo* info = CGameFileInfo::Find(filename);
