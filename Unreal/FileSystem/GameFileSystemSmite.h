@@ -7,10 +7,11 @@ struct FSmiteFile {
     int32 size;
     int32 offset;
     int32 blob_size;
+    int32 unknown;
 
 	friend FArchive& operator<<(FArchive &Ar, FSmiteFile &H)
 	{
-        return Ar << H.tier << H.size << H.offset << H.blob_size;
+        return Ar << H.tier << H.size << H.offset << H.blob_size << H.unknown;
     }
 };
 
